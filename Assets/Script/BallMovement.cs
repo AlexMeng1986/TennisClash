@@ -40,4 +40,5 @@ public class BallMovement : MonoBehaviour {
             rb.AddForce(new Vector3(directionMod * xMod * 100, 140, -directionMod * 4 * 200));
         }
     }
+		
 }
