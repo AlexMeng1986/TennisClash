@@ -48,9 +48,15 @@ public class BallMovementPredictor : MonoBehaviour {
 
 	}
     */
+	bool firstTime = true;
 	private void DrawMovementLine()
 	{
 		PerformPrediction ();
+
+		if (firstTime) {
+			PreformInversePrediction (30, transform.position, Vector3.zero);
+		    firstTime = false;
+		}
 
 
 		Vector3[] res = predictionPoints.ToArray ();
@@ -66,6 +72,10 @@ public class BallMovementPredictor : MonoBehaviour {
 		float dt = Time.fixedDeltaTime;
 		Vector3 v = (rb.isKinematic == false ? rb.velocity : Vector3.zero);
 		Vector3 acc = (rb.useGravity && rb.isKinematic == false ? Physics.gravity : Vector3.zero);
+
+		Debug.Log ("x: " + v.x);
+		Debug.Log ("y: " + v.y);
+		Debug.Log ("z: " + v.z);
 
 		Vector3 addedV = (addedForce / rb.mass) * dt;
 		v = v + addedSpeed + addedV;
@@ -107,6 +117,60 @@ public class BallMovementPredictor : MonoBehaviour {
 		}
 
 	}
+
+	Vector3 PreformInversePrediction(int timeStep, Vector3 startPos, Vector3 endPos) {
+		Vector3 startVelocity = new Vector3 ();
+		startVelocity.x = (endPos.x - startPos.x) / timeStep;
+		startVelocity.z = (endPos.z - startPos.z) / timeStep;
+
+		float acc = Mathf.Abs (Physics.gravity.y);
+		float dt = Time.fixedDeltaTime;
+
+		if (startPos.y > endPos.y) {
+			float accDis = 0.0f;
+			int iter = 0;
+			while (iter < timeStep) {
+				accDis += .5f * acc * dt * dt;
+				++iter;
+			}
+				
+			float deltaDis = startPos.y - endPos.y;
+			if (isEqual (accDis, deltaDis)) {
+				startVelocity.y = 0.0f;
+			} else if (accDis > deltaDis) {
+				
+				
+				
+				
+			} else {
+				float vDis = deltaDis - accDis;
+				startVelocity.y = vDis / (timeStep * dt);
+			}
+				
+
+		} else {
+		    
+		
+
+
+			
+		}
+
+
+
+
+		return startVelocity;
+	}
+
+	bool isEqual(float a, float b) {
+		if (a >= b - Mathf.Epsilon && a <= b + Mathf.Epsilon) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+		
 
 
 

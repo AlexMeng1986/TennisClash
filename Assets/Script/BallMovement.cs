@@ -37,8 +37,20 @@ public class BallMovement : MonoBehaviour {
             int max = 2 - directionMod * (int)pos;
             int xMod = Random.Range(min, max);
 
-            rb.AddForce(new Vector3(directionMod * xMod * 100, 140, -directionMod * 4 * 200));
+            //rb.AddForce(new Vector3(directionMod * xMod * 100, 140, -directionMod * 4 * 200));
+			//rb.velocity = new Vector3 (-2.0f, 2.6f, -15.9f);
+			//rb.velocity.x = directionMod * xMod * 2.0f;
+			//rb.velocity.y = 2.6f;
+			//rb.velocity.z = -directionMod * 15.9f;
+
+			rb.velocity = new Vector3 (directionMod * xMod * 2.0f, 2.6f, -directionMod * 15.9f);
         }
     }
+
+
+	private void OnCollisionExit(Collision collision)
+	{
+		Debug.Log (rb.velocity);
+	}
 		
 }
