@@ -3,7 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveBallCaculator {
+	
+	/// <summary>
+	/// 根据水平角、垂直角、速度标量，计算速度向量
+	/// </summary>
+	public static void CaculateVelocity(ref Vector3 velocity, float horizentalAngle, float verticalAngle, float speed) {
+		float horizentalRadian = horizentalAngle * Mathf.Deg2Rad;
+		float verticalRadian = verticalAngle * Mathf.Deg2Rad;
 
+		velocity.x = speed * Mathf.Sin (verticalRadian) * Mathf.Cos (horizentalRadian);
+		velocity.y = speed * Mathf.Cos (verticalRadian);
+		velocity.z = speed * Mathf.Sin (verticalRadian) * Mathf.Sin (horizentalRadian);	
+	}
 
 	/// <summary>
 	/// 根据重力加速度和时间间隔，更新球的位置和移动速度
@@ -48,6 +59,14 @@ public class MoveBallCaculator {
 	}
 
 
+	public static float CaculateMinVelocityYComponentToReachHeight(float distanceOffset, float heightOffset, float speed, float gravityNegative)
+	{
+		//return 10.0f;
+		float timeDistance = distanceOffset / speed;
+		return (heightOffset - 0.5f * gravityNegative * timeDistance * timeDistance) / timeDistance;
+
+	}
+    
 
 
 }

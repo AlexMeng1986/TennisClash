@@ -48,9 +48,9 @@ public class BallMovement : MonoBehaviour {
     }
 
 
-	private void OnCollisionExit(Collision collision)
-	{
-		Debug.Log (rb.velocity);
-	}
+	//private void OnCollisionExit(Collision collision)
+	//{
+	//	Debug.Log (rb.velocity);
+	//}
 		
 }

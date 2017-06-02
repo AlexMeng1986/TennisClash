@@ -42,6 +42,7 @@ namespace AAX
 		private static Vector3[] CalculateNewPos(Vector3 x, Vector3 v, Vector3 a, float drag, float deltaTimeCount)
 		{
 			var dt = Time.fixedDeltaTime;
+			Debug.Log ("fixedDeltaTime: " + dt);
 			var aDt = a * dt;
 			var dragDt = 1 - drag * dt;
 			dragDt = dragDt < 0 ? 0 : dragDt;
